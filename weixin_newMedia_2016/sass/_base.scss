@@ -1,0 +1,46 @@
+@charset "utf-8";
+a{ cursor:pointer; outline:none; text-decoration:none;}
+%ie6-di{ _display:inline;}
+%clearfix{ visibility:hidden; display:block; font-size:0; content:" "; clear:both; height:0;}
+%fl{ @extend %ie6-di; float:left;}
+%fr{ @extend %ie6-di; float:right;}
+%txt-cut{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+%none{ display:none;}
+%break{ word-break:break-all;}
+%vm{ vertical-align:middle;}
+%tc{ text-align:center;}
+%tr{ text-align:right;}
+fieldset,img{border:none;vertical-align:text-bottom;}
+input[type="submit"],input[type="reset"],input[type="button"]{-webkit-appearance:none;border-radius:0;}
+%inputInit{ margin:0; padding:0; border:none; background:none; appearance:none; -webkit-appearance:none; border-radius:0; font-family:STHeiti,"MicroSoft YaHei",Arial; font-size:1.2rem;}
+html{ font-size:62.5%; font-family:STHeiti,"MicroSoft YaHei",Arial; line-height:normal;}
+
+@mixin set-bg($img, $x: 0, $y: 0, $repeat: no-repeat){background: image-url(#{$img}) $x $y $repeat;}
+@mixin set-size($w: 100%, $h: 100%){background-size:$w $h;}
+@mixin box{@include experimental-value(display, box);}
+@mixin box-align($align){@include experimental(box-align, $align);}
+@mixin box-pack($pack){@include experimental(box-pack, $pack);}
+@mixin box-flex($flex: 1){@include experimental(box-flex, $flex);}
+@mixin txt-line-cut($line){
+	overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:$line; -webkit-box-orient:vertical;
+}
+
+$icons: sprite-map("icons/*.png", $spacing:10rem, $layout: horizontal);
+%icon-base{ background-repeat:no-repeat; background-image:$icons; background-size:sprite-width($icons) / 20px * 1rem auto;}
+@mixin icon-post($iconName){
+	@extend %icon-base; 
+	$bg-pos: sprite-position($icons, $iconName);
+	$bg-pos-x: 0;
+	$bg-pos-y: 0;
+	@if(nth($bg-pos, 1) == 0){
+		$bg-pos-x: 0;	
+	}@else{
+		$bg-pos-x: nth($bg-pos, 1) / 20px * 1rem;
+	}
+	@if(nth($bg-pos, 2) == 0){
+		$bg-pos-y: 0;	
+	}@else{
+		$bg-pos-y: nth($bg-pos, 2) / 20px * 1rem;
+	} 
+	background-position: $bg-pos-x $bg-pos-y;
+}
